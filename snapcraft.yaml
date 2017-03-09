@@ -1,0 +1,24 @@
+name: env-test
+version: 0.0.1
+summary: Test app environment variables 
+description: Test app environment variables 
+confinement: devmode
+grade: devel
+
+parts:
+  min-env-test:
+    source: .
+    plugin: dump   
+    install: |                   
+      install -D echo-vars.sh $SNAPCRAFT_PART_INSTALL/usr/bin/echo-vars.sh 
+    prime: [ usr/bin ]
+    
+apps:
+  env-test:
+    command: usr/bin/echo-vars.sh     
+    environment:
+      MY_RO_AREA: $SNAP
+      MY_RO_AREA_BAD: $SNAP/etc/myro
+      MY_RW_AREA: $SNAP_DATA
+      MY_RW_AREA_BAD: $SNAP_DATA/myrw
+                  
